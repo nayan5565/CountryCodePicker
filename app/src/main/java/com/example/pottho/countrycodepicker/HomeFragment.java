@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private View view;
-    private Button btnGetCountry, btnFullNumber;
+    private Button btnGetCountry, btnFullNumber, btnLanguage;
 
     public HomeFragment() {
 
@@ -31,10 +31,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init() {
+        btnLanguage = view.findViewById(R.id.btnLanguage);
         btnGetCountry = view.findViewById(R.id.btnGetCountry);
         btnFullNumber = view.findViewById(R.id.btnFullNumber);
         btnGetCountry.setOnClickListener(this);
         btnFullNumber.setOnClickListener(this);
+        btnLanguage.setOnClickListener(this);
     }
 
     public void setFragment(Fragment fragment) {
@@ -55,6 +57,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.btnGetCountry:
                 MainActivity.exit = 1;
                 setFragment(new GetCountryFragment());
+                break;
+            case R.id.btnLanguage:
+                MainActivity.exit = 1;
+                setFragment(new LanguageSupportFragment());
                 break;
         }
     }
