@@ -68,7 +68,6 @@
                                 android:id="@+id/editText_loadCarrierNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:editable="false"
                                 android:hint="phone"
                                 android:inputType="phone"
                                 android:singleLine="true"
@@ -108,6 +107,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:ccp_hintExampleNumber="true"
+                                app:ccp_defaultNameCode="bd"
                                 app:ccp_selectionMemoryTag="getFullNumber" />
 
                             <EditText
@@ -117,7 +117,6 @@
                                 android:hint="phone"
                                 android:inputType="phone"
                                 android:singleLine="true"
-                                android:text="8866667722"
                                 android:textColor="@android:color/black" />
                         </LinearLayout>
                     </LinearLayout>

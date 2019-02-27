@@ -114,8 +114,8 @@ public class FullNumberFragment extends Fragment {
                 }
             }
         });
-
-        ccpLoadNumber.registerCarrierNumberEditText(editTextLoadCarrierNumber);
+//        ccpGetNumber.registerCarrierNumberEditText(editTextGetCarrierNumber);
+//        ccpLoadNumber.registerCarrierNumberEditText(editTextLoadCarrierNumber);
     }
 
     private void assignView() {
