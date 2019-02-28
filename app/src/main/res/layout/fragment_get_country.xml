@@ -11,34 +11,62 @@
         android:id="@+id/lnCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_vertical">
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <com.hbb20.CountryCodePicker
             android:id="@+id/ccp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1.3"
             app:ccpDialog_keyboardAutoPopup="false"
+            app:ccp_defaultNameCode="BD"
             app:ccp_hintExampleNumber="true"
-            app:ccp_showFlag="false"
-            app:ccp_showNameCode="false"
-            app:ccp_defaultNameCode="BD" />
+            app:ccp_showFlag="true"
+            app:ccp_showNameCode="true" />
 
         <EditText
             android:id="@+id/edtPhone"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1.5"
             android:enabled="true"
             android:inputType="phone"
             android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/add_field_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:background="@drawable/ic_add_black_24dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_below="@id/lnCountry"
+    <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:orientation="horizontal">
+        android:layout_below="@id/lnRead">
+
+        <LinearLayout
+            android:id="@+id/lnEditField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical" />
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/lnRead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lnCountry"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <TextView
             android:id="@+id/textView_countryName"
