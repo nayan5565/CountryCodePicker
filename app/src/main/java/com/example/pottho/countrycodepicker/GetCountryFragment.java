@@ -1,6 +1,7 @@
 package com.example.pottho.countrycodepicker;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,17 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static android.support.v4.content.ContextCompat.getSystemService;
+
 public class GetCountryFragment extends Fragment {
     private View view;
-    TextView textViewCountryName, textViewCountryCode, textViewCountryNameCode, add_field_button;
-    Button buttonReadCountry;
+    TextView textViewCountryName, textViewCountryCode, textViewCountryNameCode, add_field_button, tvDelete;
+    Button buttonReadCountry, delete_button;
     EditText edtPhone;
     CountryCodePicker ccp;
     private boolean isValidatedNumber;
-    private LinearLayout lnEditField;
+    private LinearLayout lnEditField, lnDelete;
     private int click = 0;
-    String msg;
-
     List<String> allNumber;
 
     public GetCountryFragment() {
@@ -78,8 +79,9 @@ public class GetCountryFragment extends Fragment {
                 textViewCountryName.setText(ccp.getSelectedCountryName());
                 textViewCountryCode.setText(ccp.getSelectedCountryCodeWithPlus());
                 textViewCountryNameCode.setText(ccp.getSelectedCountryNameCode());
+                Toast.makeText(getContext(), " Click: " + click, Toast.LENGTH_SHORT).show();
+                allNumber.clear();
                 for (int i = 0; i < click; i++) {
-                    msg = getTextFromEdit(i);
                     allNumber.add(getTextFromEdit(i));
                 }
                 popup();
@@ -91,15 +93,15 @@ public class GetCountryFragment extends Fragment {
             public void onClick(View v) {
                 click++;
                 prepareDisplayEdittext();
+//                createView();
             }
         });
-
-
     }
 
     private void assignViews() {
         allNumber = new ArrayList<>();
         lnEditField = view.findViewById(R.id.lnEditField);
+        lnDelete = view.findViewById(R.id.lnDelete);
         ccp = view.findViewById(R.id.ccp);
         textViewCountryCode = view.findViewById(R.id.textView_countryCode);
         edtPhone = view.findViewById(R.id.edtPhone);
@@ -117,17 +119,53 @@ public class GetCountryFragment extends Fragment {
         myEditText.setId(id);
         myEditText.setTextColor(Color.GRAY);
         myEditText.setHintTextColor(Color.GRAY);
-
+        myEditText.setBackgroundResource(R.drawable.rounded_edittext);
         myEditText.setHint(hint);
         myEditText.setInputType(InputType.TYPE_CLASS_PHONE);
         lnEditField.addView(myEditText);
 
     }
 
+
+    private void createTextView(int id) {
+        LinearLayout.LayoutParams mRparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mRparams.setMargins(0, 0, 0, 22);
+        TextView textView = new TextView(getContext());
+        textView.setLayoutParams(mRparams);
+        textView.setId(id);
+        textView.setBackgroundResource(R.drawable.ic_remove);
+        lnDelete.addView(textView);
+        lnDelete.setVerticalGravity(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    private void visibilityGone(int id) {
+        TextView textView = lnDelete.findViewById(id);
+        textView.setVisibility(View.INVISIBLE);
+    }
+
+    private void visibilityView(int id) {
+        TextView textView = lnDelete.findViewById(id);
+        textView.setVisibility(View.VISIBLE);
+    }
+
+    private void createView() {
+        LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(getContext()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert inflater != null;
+        final View rowView = inflater.inflate(R.layout.field, null);
+        // Add the new row before the add field button.
+        lnEditField.addView(rowView, lnEditField.getChildCount() - 1);
+    }
+
     private void prepareDisplayEdittext() {
         lnEditField.removeAllViews();
+        lnDelete.removeAllViews();
         for (int i = 0; i < click; i++) {
             createEdittext("Alter Number " + i, i);
+            createTextView(i);
+            if (i > 0) {
+                visibilityGone(i - 1);
+            }
+            setOnDateFromClickListner(i);
         }
     }
 
@@ -135,6 +173,25 @@ public class GetCountryFragment extends Fragment {
         EditText editText = lnEditField.findViewById(id);
         String s = editText.getText().toString().trim();
         return s;
+    }
+
+
+    private void setOnDateFromClickListner(final int id) {
+        TextView tvRemove = lnDelete.findViewById(id);
+        tvRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                click--;
+                Toast.makeText(getContext(), "Remove: " + id + " Click: " + click, Toast.LENGTH_SHORT).show();
+                lnEditField.removeViewAt(id);
+
+//                lnEditField.removeView(getFromEdit(id));
+//                lnEditField.removeViewAt(lnEditField.getChildCount() - 1);
+                lnDelete.removeViewAt(id);
+                if (click >= 1)
+                    visibilityView(lnDelete.getChildCount() - 1);
+            }
+        });
     }
 
     private void popup() {

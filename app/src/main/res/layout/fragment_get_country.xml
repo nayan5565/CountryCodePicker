@@ -30,9 +30,10 @@
         <EditText
             android:id="@+id/edtPhone"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1.5"
+            android:background="@drawable/rounded_edittext"
             android:enabled="true"
             android:inputType="phone"
             android:singleLine="true" />
@@ -49,14 +50,33 @@
         android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/buttonReadCountry"
         android:layout_below="@id/lnRead">
 
         <LinearLayout
-            android:id="@+id/lnEditField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical" />
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/lnEditField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+
+            <LinearLayout
+                android:id="@+id/lnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical" />
+
+
+        </LinearLayout>
+
+
     </ScrollView>
 
 
