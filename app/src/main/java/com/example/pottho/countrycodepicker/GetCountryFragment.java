@@ -85,6 +85,8 @@ public class GetCountryFragment extends Fragment {
                 allNumber.clear();
                 for (int i = 0; i < click; i++) {
                     allNumber.add(getTextFromEdit(i));
+                    Utils.savePref("Number" + i, "");
+
                 }
                 popup();
             }
@@ -122,8 +124,13 @@ public class GetCountryFragment extends Fragment {
         myEditText.setTextColor(Color.GRAY);
         myEditText.setHintTextColor(Color.GRAY);
         myEditText.setBackgroundResource(R.drawable.rounded_edittext);
-        myEditText.setHint(hint);
-        myEditText.setText(Utils.getPref("Number"+id,"0"));
+
+        if (Utils.getPref("Number" + id, "").equals("")) {
+            myEditText.setHint(hint);
+        } else {
+            myEditText.setText(Utils.getPref("Number" + id, ""));
+        }
+
         myEditText.setInputType(InputType.TYPE_CLASS_PHONE);
         lnEditField.addView(myEditText);
 
@@ -181,27 +188,27 @@ public class GetCountryFragment extends Fragment {
     }
 
 
-private void setOnClickListener(final int id){
-    EditText editText = lnEditField.findViewById(id);
-    editText.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    private void setOnClickListener(final int id) {
+        EditText editText = lnEditField.findViewById(id);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        }
+            }
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            Utils.savePref("Number"+id,getTextFromEdit(id));
-            Toast.makeText(getContext(), "Number: " + id, Toast.LENGTH_SHORT).show();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Utils.savePref("Number" + id, getTextFromEdit(id));
+                Toast.makeText(getContext(), "Number: " + id, Toast.LENGTH_SHORT).show();
 
-        }
+            }
 
-        @Override
-        public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-        }
-    });
-}
+            }
+        });
+    }
 
     private void setOnDateFromClickListner(final int id) {
         TextView tvRemove = lnDelete.findViewById(id);
