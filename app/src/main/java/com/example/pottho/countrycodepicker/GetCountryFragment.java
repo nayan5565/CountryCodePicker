@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +123,7 @@ public class GetCountryFragment extends Fragment {
         myEditText.setHintTextColor(Color.GRAY);
         myEditText.setBackgroundResource(R.drawable.rounded_edittext);
         myEditText.setHint(hint);
+        myEditText.setText(Utils.getPref("Number"+id,"0"));
         myEditText.setInputType(InputType.TYPE_CLASS_PHONE);
         lnEditField.addView(myEditText);
 
@@ -162,6 +165,8 @@ public class GetCountryFragment extends Fragment {
         for (int i = 0; i < click; i++) {
             createEdittext("Alter Number " + i, i);
             createTextView(i);
+            setOnClickListener(i);
+
             if (i > 0) {
                 visibilityGone(i - 1);
             }
@@ -175,6 +180,28 @@ public class GetCountryFragment extends Fragment {
         return s;
     }
 
+
+private void setOnClickListener(final int id){
+    EditText editText = lnEditField.findViewById(id);
+    editText.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            Utils.savePref("Number"+id,getTextFromEdit(id));
+            Toast.makeText(getContext(), "Number: " + id, Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    });
+}
 
     private void setOnDateFromClickListner(final int id) {
         TextView tvRemove = lnDelete.findViewById(id);
