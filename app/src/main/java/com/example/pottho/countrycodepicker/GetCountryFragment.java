@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static android.support.v4.content.ContextCompat.getSystemService;
-
 public class GetCountryFragment extends Fragment {
     private View view;
     TextView textViewCountryName, textViewCountryCode, textViewCountryNameCode, add_field_button, tvDelete;
@@ -172,7 +170,7 @@ public class GetCountryFragment extends Fragment {
         for (int i = 0; i < click; i++) {
             createEdittext("Alter Number " + i, i);
             createTextView(i);
-            setOnClickListener(i);
+            addTextChangedListener(i);
 
             if (i > 0) {
                 visibilityGone(i - 1);
@@ -188,7 +186,7 @@ public class GetCountryFragment extends Fragment {
     }
 
 
-    private void setOnClickListener(final int id) {
+    private void addTextChangedListener(final int id) {
         EditText editText = lnEditField.findViewById(id);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -198,7 +196,7 @@ public class GetCountryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Utils.savePref("Number" + id, getTextFromEdit(id));
+                Utils.savePref("Number" + id, s.toString());
                 Toast.makeText(getContext(), "Number: " + id, Toast.LENGTH_SHORT).show();
 
             }
